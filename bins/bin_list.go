@@ -1,11 +1,11 @@
 package bins
 
 type BinList struct {
-	bins []Bin
+	Bins []Bin `json:"bins"`
 }
 
 func NewBinList(bins []Bin) *BinList {
 	return &BinList{
-		bins: bins,
+		Bins: bins,
 	}
 }
