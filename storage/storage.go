@@ -3,16 +3,28 @@ package storage
 import (
 	"encoding/json"
 	"os"
+	"struct-ex/bins"
+	"struct-ex/file"
 )
 
-func ReadFile(path string) (string, error) {
-	data, err := os.ReadFile(path)
+func SaveBinList(list *bins.BinList, filename string) error {
+	data, err := json.Marshal(list)
 	if err != nil {
-		return "", err
+		return err
 	}
-	return string(data), nil
+	return os.WriteFile(filename, data, 0644)
 }
 
-func IsJSON(data []byte) bool {
-	return json.Valid(data)
+func ReadBinList(filename string) (*bins.BinList, error) {
+	content, err := file.ReadFile(filename)
+	if err != nil {
+		return nil, err
+	}
+
+	list := &bins.BinList{}
+	err = json.Unmarshal([]byte(content), list)
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
 }

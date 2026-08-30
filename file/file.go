@@ -1,33 +1,18 @@
 package file
 
 import (
-	"encoding/json"
 	"os"
-	"struct-ex/bins"
+	"path/filepath"
 )
 
-func CreateFile(b *bins.Bin, filename string) error {
-	data, err := json.Marshal(b)
+func ReadFile(path string) (string, error) {
+	data, err := os.ReadFile(path)
 	if err != nil {
-		return err
+		return "", err
 	}
-
-	err = os.WriteFile(filename, data, 0644)
-	if err != nil {
-		return err
-	}
-	return nil
+	return string(data), nil
 }
 
-func ReadFile(filename string) (*bins.Bin, error) {
-	data, err := os.ReadFile(filename)
-	if err != nil {
-		return nil, err
-	}
-	b := &bins.Bin{}
-	err = json.Unmarshal(data, b)
-	if err != nil {
-		return nil, err
-	}
-	return b, nil
+func IsJSON(filename string) bool {
+	return filepath.Ext(filename) == ".json"
 }
