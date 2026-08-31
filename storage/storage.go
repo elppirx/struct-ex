@@ -12,7 +12,11 @@ type Storage interface {
 	ReadBinList(string) (*bins.BinList, error)
 }
 
-func SaveBinList(list *bins.BinList, filename string) error {
+type StorageService struct {
+	File file.File
+}
+
+func (s StorageService) SaveBinList(list *bins.BinList, filename string) error {
 	data, err := json.Marshal(list)
 	if err != nil {
 		return err
@@ -20,8 +24,8 @@ func SaveBinList(list *bins.BinList, filename string) error {
 	return os.WriteFile(filename, data, 0644)
 }
 
-func ReadBinList(filename string) (*bins.BinList, error) {
-	content, err := file.ReadFile(filename)
+func (s StorageService) ReadBinList(filename string) (*bins.BinList, error) {
+	content, err := s.File.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
