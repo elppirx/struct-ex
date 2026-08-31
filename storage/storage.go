@@ -16,6 +16,10 @@ type StorageService struct {
 	File file.File
 }
 
+func NewStorageService(f file.File) Storage {
+	return StorageService{File: f}
+}
+
 func (s StorageService) SaveBinList(list *bins.BinList, filename string) error {
 	data, err := json.Marshal(list)
 	if err != nil {

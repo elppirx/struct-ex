@@ -10,11 +10,13 @@ type File interface {
 	IsJSON(string) bool
 }
 
-type FileService struct {
+type FileService struct{}
 
+func NewFileService() FileService {
+	return FileService{}
 }
 
-func(f FileService) ReadFile(path string) (string, error) {
+func (f FileService) ReadFile(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return "", err
@@ -22,6 +24,6 @@ func(f FileService) ReadFile(path string) (string, error) {
 	return string(data), nil
 }
 
-func(f FileService) IsJSON(filename string) bool {
+func (f FileService) IsJSON(filename string) bool {
 	return filepath.Ext(filename) == ".json"
 }
