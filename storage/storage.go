@@ -7,6 +7,11 @@ import (
 	"struct-ex/file"
 )
 
+type Storage interface {
+	SaveBinList(*bins.BinList, string) error
+	ReadBinList(string) (*bins.BinList, error)
+}
+
 func SaveBinList(list *bins.BinList, filename string) error {
 	data, err := json.Marshal(list)
 	if err != nil {

@@ -5,6 +5,11 @@ import (
 	"path/filepath"
 )
 
+type File interface {
+	ReadFile(string) (string, error)
+	IsJSON(string) bool
+}
+
 func ReadFile(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
